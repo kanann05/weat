@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLS Player</title>
+</head>
+<body>
+    <h2>HLS M3U8 Video Player</h2>
+    
+    <video id="video" controls width="720" height="400"></video>
+
+    <!-- Include hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const video = document.getElementById('video');
+        const videoSrc = "https://002.fclplayer.online/live/csstream2/chunklist.m3u8?vidictid=201694370648&id=1002&pk=b9dd917c2ab8de3f3a8847ec951777be1e2a0a3f791227b403d00d56d5455983"; 
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+        } else {
+            alert("Your browser does not support HLS playback.");
+        }
+    </script>
+
+
+
+
+
+
+</body>
+</html>
